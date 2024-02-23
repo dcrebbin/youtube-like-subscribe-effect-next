@@ -2,10 +2,23 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import Rating from "../../components/Rating";
+import Rating from "../components/Rating";
 
 export default function Home() {
-  const [rating, setRating] = useState(0);
+  const defaultRating = 6;
+  const [rating, setRating] = useState(defaultRating);
+
+  const [hasRated, setHasRated] = useState(false);
+
+  function handleRating() {
+    if (hasRated) {
+      setRating(rating - 1);
+      setHasRated(false);
+    } else {
+      setRating(rating + 1);
+      setHasRated(true);
+    }
+  }
 
   return (
     <div className="w-full flex flex-col">
@@ -14,7 +27,7 @@ export default function Home() {
       </div>
       <div className="p-6 w-full">
         <div className="flex gap-4">
-          <Rating rating={rating} />
+          <Rating hasRated={hasRated} handleRating={handleRating} rating={rating} />
           <div>
             <h1 className="text-xl font-bold text-black/80">How has Taro helped you in your career?</h1>
             <div className="flex w-full gap-2">
